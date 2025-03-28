@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Try to determine how much RAM is currently being used per program.
 # Note per _program_, not per process. So for example this script
@@ -589,13 +589,6 @@ def print_memory_usage(sorted_cmds, shareds, count, total, swaps, total_swap,
         sys.stdout.write("%s\n%s%9s\n%s\n" %
                          ("-" * 33, " " * 24, human(total), "=" * 33))
 
-
-def verify_environment(pids_to_show):
-    if os.geteuid() != 0 and not pids_to_show:
-        sys.stderr.write("Sorry, root permission required, or specify pids with -p\n")
-        sys.stderr.close()
-        sys.exit(1)
-
     try:
         kernel_ver()
     except (IOError, OSError):
@@ -615,8 +608,6 @@ def main():
 
     split_args, pids_to_show, watch, only_total, discriminate_by_pid, \
     show_swap = parse_options()
-
-    verify_environment(pids_to_show)
 
     if not only_total:
         print_header(show_swap, discriminate_by_pid)
